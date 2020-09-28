@@ -37,7 +37,7 @@ class Books extends React.Component {
   componentWillMount(){
     this.scrollListener = window.addEventListener('scroll',()=>{
       const {scrollTop,scrollHeight,clientHeight} = document.documentElement;
-      if((scrollTop + clientHeight) >= scrollHeight - 2){
+      if((scrollTop + clientHeight) >= scrollHeight -2){
         this.loadMore()
       }
       
@@ -47,7 +47,7 @@ class Books extends React.Component {
 
   render(){
     return (
-      <div className="books">
+      <div className="container">
       <form onSubmit = {this.onFormSubmit}>
               <label>Book Search</label>
               <div>
@@ -55,9 +55,9 @@ class Books extends React.Component {
               </div>
         </form>
         <ul>
-          {this.state.books.map(book => <li>
+          {this.state.books.map(book => <div id = "list">
             <BooksList {...book}/>
-          </li>)}
+          </div>)}
         </ul>
         {/* <button onClick={this.loadMore}>Load More</button> */}
     </div>)
