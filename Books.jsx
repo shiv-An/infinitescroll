@@ -42,25 +42,26 @@ class Books extends React.Component {
     this.loadBooks(this.state.term,this.state.page);
     
   }
-
-  componentWillMount(){
-    this.scrollListener = window.addEventListener('scroll',()=>{
-      const {scrollTop,scrollHeight,clientHeight} = document.documentElement;
-      console.log({scrollTop,scrollHeight,clientHeight})
-      if(((scrollTop + clientHeight) >= scrollHeight - 500) && this.leftFlag){
-        this.addRight()
-        this.loadMore()
-        this.rightFlag = true;
-        this.leftFlag = false;
-      }
-      else if (this.rightFlag) {
-        this.addLeft()
-        this.rightFlag = false;
-        this.leftFlag = true;
-      }
+  scrollListener = window.addEventListener('scroll',()=>{
+    const {scrollTop,scrollHeight,clientHeight} = document.documentElement;
+    console.log({scrollTop,scrollHeight,clientHeight})
+    if(((scrollTop + clientHeight) >= scrollHeight - 500) && this.leftFlag){
+      this.rightFlag = true;
+      this.leftFlag = false;
+      console.log(this.leftFlag)
+      this.addRight()
+      this.loadMore()
       
-    })
-  }
+    }
+    else if (((scrollTop + clientHeight) >= scrollHeight - 500) && this.rightFlag) {
+      this.rightFlag = false;
+      this.leftFlag = true;
+      this.addLeft()
+    }
+    
+  })
+
+
 
 
   arraySplit  = () => {
@@ -80,7 +81,7 @@ class Books extends React.Component {
     this.leftSide = []
     console.log(displayArray)
   }
-  
+
   addRight = () => {
     let{displayArray} = this.state
     this.setState({displayArray:[...displayArray,...this.rightSide]})
